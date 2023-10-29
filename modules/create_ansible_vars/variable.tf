@@ -6,3 +6,7 @@ variable "ansible_dir" {
 variable "webserver_ips" {
   type = list(string)
 }
+
+variable "pubkey_path" {
+  type = string
+}
