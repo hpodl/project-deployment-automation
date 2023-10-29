@@ -23,8 +23,8 @@ module "compute" {
   private_key_path   = var.private_key_path
 }
 
-module "create_ansible_vars" {
-  source           = "./modules/create_ansible_vars"
+module "create_ansible_files" {
+  source           = "./modules/create_ansible_files"
   webserver_ips    = module.compute.webserver_ips
   private_key_path = var.private_key_path
 }
