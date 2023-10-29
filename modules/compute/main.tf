@@ -21,7 +21,7 @@ resource "aws_key_pair" "webserver_ssh_key" {
 
   # saves the private key locally with default permissions
   provisioner "local-exec" {
-    command = "echo '${tls_private_key.key_pair.private_key_pem}' > '${var.private_key_path}'"
+    command = "echo '${tls_private_key.key_pair.private_key_openssh}' > '${var.private_key_path}'"
   }
 }
 

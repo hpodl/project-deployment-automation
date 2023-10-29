@@ -17,3 +17,7 @@ output "sg_ingress_http_id" {
 output "sg_ingress_ssh_id" {
   value = aws_security_group.sg_ingress_ssh.id
 }
+
+output "sg_egress_all_id" {
+  value = aws_security_group.sg_allow_all_egress.id
+}

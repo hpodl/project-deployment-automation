@@ -4,12 +4,29 @@ resource "aws_vpc" "main_cloud" {
 
 resource "aws_subnet" "webserver_subnet" {
   vpc_id     = aws_vpc.main_cloud.id
-  cidr_block = "10.0.0.0/24"
+  cidr_block = aws_vpc.main_cloud.cidr_block
+}
+
+resource "aws_security_group" "sg_allow_all_egress" {
+  name        = "allow_all_egress"
+  description = "Allows all egress traffic"
+  vpc_id      = aws_vpc.main_cloud.id
+
+  egress {
+    description = "any coming from instance"
+    protocol    = "-1"
+
+    to_port     = 0 # any
+    from_port   = 0 # any
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_security_group" "sg_ingress_http" {
   name        = "allow_http"
   description = "Allows ingress TCP traffic to port 80"
+  vpc_id      = aws_vpc.main_cloud.id
+
   ingress {
     description = "http to instance"
     protocol    = "tcp"
@@ -23,6 +40,8 @@ resource "aws_security_group" "sg_ingress_http" {
 resource "aws_security_group" "sg_ingress_ssh" {
   name        = "allow_ssh"
   description = "Allows ingress TCP traffic to port 22"
+  vpc_id      = aws_vpc.main_cloud.id
+
   ingress {
     description = "ssh to instance"
     protocol    = "tcp"
