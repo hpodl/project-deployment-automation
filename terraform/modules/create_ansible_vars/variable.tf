@@ -7,6 +7,6 @@ variable "webserver_ips" {
   type = list(string)
 }
 
-variable "pubkey_path" {
+variable "private_key_path" {
   type = string
 }
