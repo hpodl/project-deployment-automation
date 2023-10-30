@@ -28,3 +28,9 @@ module "create_ansible_files" {
   webserver_ips    = module.compute.webserver_ips
   private_key_path = var.private_key_path
 }
+
+module "database" {
+  source = "./modules/database"
+  db_user = var.db_user
+  db_passwd = var.db_passwd
+}
