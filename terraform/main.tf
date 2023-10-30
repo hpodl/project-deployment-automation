@@ -30,7 +30,9 @@ module "create_ansible_files" {
 }
 
 module "database" {
-  source = "./modules/database"
-  db_user = var.db_user
-  db_passwd = var.db_passwd
+  source               = "./modules/database"
+  db_user              = var.db_user
+  db_passwd            = var.db_passwd
+  db_subnet_group_name = module.vpc.db_subnet_group_name
+  db_security_groups   = [module.vpc.sg_database_id]
 }
