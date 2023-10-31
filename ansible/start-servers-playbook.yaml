@@ -40,6 +40,6 @@
           - 8088:8088
         env:
           RUN_PROFILE: mysql
-          MYSQL_URL: '{{ mysql_url }}'
-          MYSQL_USER: '{{ mysql_user }}'
-          MYSQL_PASS: '{{ mysql_password }}'
+          MYSQL_URL: "jdbc:mysql://{{ db_url }}/petclinic"
+          MYSQL_USER: '{{ db_user }}'
+          MYSQL_PASS: '{{ db_password }}'
