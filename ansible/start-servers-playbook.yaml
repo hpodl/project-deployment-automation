@@ -4,7 +4,7 @@
   remote_user: ec2-user # for simplicity
 
   vars:
-    docker_image: mydockertestacc/main:1946d63e
+    docker_image: mydockertestacc/main:6ff96326
   vars_files:
     - ./tf_variables.yaml
 
@@ -32,13 +32,14 @@
     - name: Run docker image
       become: true
       community.docker.docker_container:
-        name: 'webserver_container'
+        name: webserver_container
         image: '{{ docker_image }}'
         state: started
         published_ports:
           - 80:8080
           - 8088:8088
         env:
+          RUN_PROFILE: mysql
           MYSQL_URL: '{{ mysql_url }}'
           MYSQL_USER: '{{ mysql_user }}'
           MYSQL_PASS: '{{ mysql_password }}'
