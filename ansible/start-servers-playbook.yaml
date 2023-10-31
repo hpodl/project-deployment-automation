@@ -5,8 +5,8 @@
 
   vars:
     docker_image: mydockertestacc/main:1946d63e
-  # vars_files:
-  #   - ./tf_variables.yaml
+  vars_files:
+    - ./tf_variables.yaml
 
   tasks:
     - name: Update or install docker
@@ -38,3 +38,7 @@
         published_ports:
           - 80:8080
           - 8088:8088
+        env:
+          MYSQL_URL: '{{ mysql_url }}'
+          MYSQL_USER: '{{ mysql_user }}'
+          MYSQL_PASS: '{{ mysql_password }}'
