@@ -1,5 +1,5 @@
 locals {
-  sql_file = "./user.sql"
+  sql_file = "../ansible/user.sql"
 }
 resource "aws_db_instance" "petclinic_db" {
   allocated_storage      = 10
@@ -15,20 +15,19 @@ resource "aws_db_instance" "petclinic_db" {
   vpc_security_group_ids = var.db_security_groups
 
   # provisioner "local-exec" {
-  #   command = "mysql --host=${self.address} --port=${self.port} --user=${self.username} --password=${self.password} < ${local.sql_file}"
+  #   command = "mariadb --host=${self.address} --port=${self.port} --user=${self.username} --password=${self.password} < ${local.sql_file}"
   # }
-
 }
 
-# resource "local_file" "db_create_script" {
-#   filename = local.sql_file
-#   content  = <<EOF
-# CREATE DATABASE IF NOT EXISTS petclinic;
+resource "local_file" "db_create_script" {
+  filename = local.sql_file
+  content  = <<EOF
+CREATE DATABASE IF NOT EXISTS petclinic;
 
-# ALTER DATABASE petclinic
-#   DEFAULT CHARACTER SET utf8
-#   DEFAULT COLLATE utf8_general_ci;
+ALTER DATABASE petclinic
+  DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;
 
-# GRANT ALL PRIVILEGES ON petclinic.* TO '${var.db_user}'@'%' IDENTIFIED BY 'petclinic';
-# EOF
-# }
+GRANT ALL PRIVILEGES ON petclinic.* TO '${var.db_user}'@'${aws_db_instance.petclinic_db.address}' IDENTIFIED BY '${var.db_passwd}';
+EOF
+}

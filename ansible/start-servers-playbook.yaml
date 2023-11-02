@@ -9,6 +9,25 @@
     - ./tf_variables.yaml
 
   tasks:
+
+    - name: Configure mysql database schema
+      block:
+        - name: Update or install mariadb
+          become: true
+          ansible.builtin.package:
+            name: mariadb105-server.x86_64
+
+        - name: Move script file
+          ansible.builtin.copy:
+            src: '{{ playbook_dir }}/user.sql'
+            dest: /home/ec2-user/user.sql
+            mode: "0644"
+
+        - name: Run mysql command
+          become: true
+          ansible.builtin.shell: mariadb --host={{ db_url }} --port=3306 --user={{ db_user }} --password={{ db_password }} < /home/ec2-user/user.sql
+          changed_when: true # temporary hack
+
     - name: Update or install docker
       become: true
       ansible.builtin.package:
