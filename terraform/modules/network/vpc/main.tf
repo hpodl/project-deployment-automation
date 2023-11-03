@@ -54,13 +54,22 @@ resource "aws_security_group" "sg_ingress_http" {
   }
 }
 
-resource "aws_security_group" "sg_ingress_ssh" {
+resource "aws_security_group" "sg_allow_ssh" {
   name        = "allow_ssh"
-  description = "Allows ingress TCP traffic to port 22"
+  description = "Allows TCP traffic to and from port 22"
   vpc_id      = aws_vpc.main_cloud.id
 
   ingress {
     description = "ssh to instance"
+    protocol    = "tcp"
+
+    to_port     = 22
+    from_port   = 22
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "ssh from instance"
     protocol    = "tcp"
 
     to_port     = 22

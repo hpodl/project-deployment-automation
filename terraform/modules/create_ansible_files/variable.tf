@@ -6,6 +6,9 @@ variable "ansible_dir" {
 variable "webserver_ips" {
   type = list(string)
 }
+variable "bastion_ip" {
+  type = string
+}
 
 variable "private_key_path" {
   type = string

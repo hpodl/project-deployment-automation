@@ -1,7 +1,3 @@
-variable "subnet_id" {
-  type = string
-}
-
-variable "security_group_ids" {
-  type = list(string)
+output "bastion_instance_ip" {
+  value = aws_instance.bastion_instance.public_ip
 }
