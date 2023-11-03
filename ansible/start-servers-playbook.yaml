@@ -1,14 +1,15 @@
 ---
-- name: Set up web servers
-  hosts: webservers
-  remote_user: ec2-user # for simplicity
-
-  vars:
-    docker_image: mydockertestacc/main:6ff96326
+- name: Set up bastion instance
+  hosts: bastion
+  remote_user: ec2-user
   vars_files:
     - ./tf_variables.yaml
-
   tasks:
+    - name: Copy private key for webserver instances
+      ansible.builtin.copy:
+        src: '{{ playbook_dir }}/webserver_key'
+        dest: /home/ec2-user/webserver_key
+        mode: "0600"
 
     - name: Configure mysql database schema
       block:
@@ -28,6 +29,16 @@
           ansible.builtin.shell: mariadb --host={{ db_url }} --port=3306 --user={{ db_user }} --password={{ db_password }} < /home/ec2-user/user.sql
           changed_when: true # temporary hack
 
+- name: Set up web servers
+  hosts: webservers
+  remote_user: ec2-user # for simplicity
+
+  vars:
+    docker_image: mydockertestacc/main:6ff96326
+  vars_files:
+    - ./tf_variables.yaml
+
+  tasks:
     - name: Update or install docker
       become: true
       ansible.builtin.package:

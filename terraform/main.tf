@@ -34,7 +34,7 @@ module "compute" {
 
 module "bastion" {
   source             = "./modules/network/bastion"
-  security_group_ids = [module.vpc.sg_allow_ssh_id]
+  security_group_ids = [module.vpc.sg_allow_ssh_id, module.vpc.sg_egress_all_id]
   subnet_id          = module.vpc.subnet_id
 }
 
