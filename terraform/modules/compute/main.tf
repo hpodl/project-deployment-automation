@@ -4,7 +4,7 @@ resource "aws_autoscaling_group" "webservers_group" {
   max_size            = 3
   min_size            = 3
 
-  # target_group_arns = [aws_lb_target_group.webservers_tg.arn]
+  target_group_arns = var.target_group_arns
   launch_template {
     id      = aws_launch_template.webserver_template.id
     version = "$Latest"

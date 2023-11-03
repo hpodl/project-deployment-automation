@@ -14,8 +14,8 @@ output "gateway_id" {
   value = aws_internet_gateway.gateway_main.id
 }
 
-output "sg_ingress_http_id" {
-  value = aws_security_group.sg_ingress_http.id
+output "sg_allow_http_id" {
+  value = aws_security_group.sg_allow_http.id
 }
 
 output "sg_allow_ssh_id" {

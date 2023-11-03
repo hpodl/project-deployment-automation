@@ -39,7 +39,7 @@ resource "aws_security_group" "sg_allow_all_egress" {
   }
 }
 
-resource "aws_security_group" "sg_ingress_http" {
+resource "aws_security_group" "sg_allow_http" {
   name        = "allow_http"
   description = "Allows ingress TCP traffic to port 80"
   vpc_id      = aws_vpc.main_cloud.id
@@ -52,6 +52,16 @@ resource "aws_security_group" "sg_ingress_http" {
     from_port   = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  egress {
+    description = "http from instance"
+    protocol    = "tcp"
+
+    to_port     = 80
+    from_port   = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 }
 
 resource "aws_security_group" "sg_allow_ssh" {
