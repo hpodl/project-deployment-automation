@@ -110,6 +110,27 @@ resource "aws_security_group" "sg_database" {
   }
 }
 
+resource "aws_security_group" "sg_all_within_subnet" {
+  vpc_id = aws_vpc.main_cloud.id
+  description = "Allows free ingress and egress traffic within the subnets"
+  ingress {
+    description = "to subnet"
+    protocol    = -1
+    to_port     = 0
+    from_port   = 0
+    cidr_blocks = [aws_subnet.webserver_subnet.cidr_block, aws_subnet.db_backup_subnet.cidr_block]
+
+  }
+  egress {
+    description = "from subnet"
+    protocol    = -1
+    to_port     = 0
+    from_port   = 0
+    cidr_blocks = [aws_subnet.webserver_subnet.cidr_block, aws_subnet.db_backup_subnet.cidr_block]
+
+  }
+}
+
 ### Routing ###
 
 resource "aws_internet_gateway" "gateway_main" {
@@ -129,3 +150,5 @@ resource "aws_route_table_association" "main_rt_to_main_subnet" {
   route_table_id = aws_route_table.main_route_table.id
   subnet_id      = aws_subnet.webserver_subnet.id
 }
+
+resource "aws_eip" "lb_eip" {}

@@ -33,3 +33,11 @@ output "sg_database_id" {
 output "db_subnet_group_name" {
   value = aws_db_subnet_group.petclinic_db_subnet.name
 }
+
+output "sg_all_within_subnet_id" {
+  value = aws_security_group.sg_all_within_subnet.id
+}
+
+output "lb_eip_id" {
+  value = aws_eip.lb_eip.id
+}

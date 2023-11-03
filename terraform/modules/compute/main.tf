@@ -12,14 +12,14 @@ resource "aws_autoscaling_group" "webservers_group" {
 }
 
 resource "aws_launch_template" "webserver_template" {
-  image_id               = "ami-0dbc3d7bc646e8516"
-  instance_type          = "t2.medium"
-  key_name               = aws_key_pair.webserver_ssh_key.key_name
+  image_id      = "ami-0dbc3d7bc646e8516"
+  instance_type = "t2.medium"
+  key_name      = aws_key_pair.webserver_ssh_key.key_name
 
   network_interfaces {
     associate_public_ip_address = true
     subnet_id                   = var.subnet_id
-    security_groups = var.security_group_ids
+    security_groups             = var.security_group_ids
   }
 
   tag_specifications {
