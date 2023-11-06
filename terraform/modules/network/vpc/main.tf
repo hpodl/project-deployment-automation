@@ -110,8 +110,36 @@ resource "aws_security_group" "sg_database" {
   }
 }
 
-resource "aws_security_group" "sg_all_within_subnet" {
+resource "aws_security_group" "sg_monitoring" {
+  description = "Allows ingress traffic on ports 3000 and 9090 (Grafana, Prometheus)"
   vpc_id = aws_vpc.main_cloud.id
+  egress {
+    description = "all egress tcp"
+    protocol    = "tcp"
+    to_port     = 0
+    from_port   = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Grafana"
+    protocol    = "tcp"
+    to_port     = 3000
+    from_port   = 3000
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Prometheus"
+    protocol    = "tcp"
+    to_port     = 9090
+    from_port   = 9090
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "sg_all_within_subnet" {
+  vpc_id      = aws_vpc.main_cloud.id
   description = "Allows free ingress and egress traffic within the subnets"
   ingress {
     description = "to subnet"

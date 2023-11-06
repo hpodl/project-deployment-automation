@@ -55,3 +55,10 @@ module "database" {
   db_subnet_group_name = module.vpc.db_subnet_group_name
   db_security_groups   = [module.vpc.sg_database_id]
 }
+
+module "monitoring" {
+  source             = "./modules/monitoring"
+  vpc_id             = module.vpc.vpc_id
+  subnet_id          = module.vpc.subnet_id
+  security_group_ids = [module.vpc.sg_egress_all_id, module.vpc.sg_allow_ssh_id, module.vpc.sg_monitoring_id]
+}
