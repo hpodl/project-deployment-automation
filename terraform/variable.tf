@@ -1,3 +1,9 @@
+variable "region" {
+  description = "region of the main vpc and all the other resources"
+  type        = string
+  default     = "us-east-1"
+}
+
 variable "private_key_path" {
   description = "path where the newly generated key pair will be saved"
   type        = string
@@ -6,11 +12,13 @@ variable "private_key_path" {
 }
 
 variable "db_user" {
-  type      = string
-  sensitive = true
+  description = "database username"
+  type        = string
+  sensitive   = true
 }
 
 variable "db_passwd" {
-  type      = string
-  sensitive = true
+  description = "database password"
+  type        = string
+  sensitive   = true
 }

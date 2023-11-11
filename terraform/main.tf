@@ -1,4 +1,10 @@
 terraform {
+  backend "s3" {
+    bucket = var.state_bucket
+    key    = var.state_path
+    region = var.state_region
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -8,7 +14,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
 
 module "vpc" {
