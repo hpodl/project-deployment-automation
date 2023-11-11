@@ -5,17 +5,19 @@
   vars_files:
     - ./tf_variables.yaml
   tasks:
-    - name: Add known hosts
-      ansible.builtin.copy:
-        src: '{{ playbook_dir }}/webserver_key'
-        dest: /home/ec2-user/webserver_key
-        mode: "0600"
+    - name: Set up connections to webserver instances
+      block:
+        - name: Copy keys
+          ansible.builtin.copy:
+            src: '{{ playbook_dir }}/webserver_key'
+            dest: /home/ec2-user/webserver_key
+            mode: "0600"
 
-    - name: Copy known_hosts file containing webserver public keys
-      ansible.builtin.copy:
-        src: '{{ playbook_dir }}/known_hosts.txt'
-        dest: /home/ec2-user/.ssh/known_hosts
-        mode: "0600"
+        - name: Copy known_hosts file containing webserver public keys
+          ansible.builtin.copy:
+            src: '{{ playbook_dir }}/known_hosts.txt'
+            dest: /home/ec2-user/.ssh/known_hosts
+            mode: "0600"
 
     - name: Configure mysql database schema
       block:
