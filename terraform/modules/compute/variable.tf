@@ -14,7 +14,7 @@ variable "security_group_ids" {
 }
 
 variable "private_key_path" {
-  description = "path where the newly generated key pair will be saved"
+  description = ""
   type        = string
 }
 

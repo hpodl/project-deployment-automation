@@ -18,16 +18,15 @@ variable "webserver_pubkey" {
   type = string
 }
 
-variable "bastion_key" {
+variable "bastion_key_name" {
   type    = string
-  default = "../ansible/bastion_key"
+  default = "bastion_key"
 }
 
 variable "bastion_pubkey" {
   type    = string
-  default = "../ansible/bastion_key"
+  default = "bastion_key"
 }
-
 
 variable "db_user" {
   type = string
