@@ -14,10 +14,20 @@ variable "private_key_path" {
   type = string
 }
 
-variable "bastion_key" {
+variable "webserver_pubkey" {
   type = string
+}
+
+variable "bastion_key" {
+  type    = string
   default = "../ansible/bastion_key"
 }
+
+variable "bastion_pubkey" {
+  type    = string
+  default = "../ansible/bastion_key"
+}
+
 
 variable "db_user" {
   type = string

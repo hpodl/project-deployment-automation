@@ -45,13 +45,21 @@ module "bastion" {
 }
 
 module "create_ansible_files" {
-  source           = "./modules/create_ansible_files"
+  source = "./modules/create_ansible_files"
+
+  # webserver args
   webserver_ips    = module.compute.webserver_priv_ips
-  bastion_ip       = module.bastion.bastion_instance_ip
   private_key_path = var.private_key_path
-  db_user          = var.db_user
-  db_passwd        = var.db_passwd
-  db_url           = module.database.db_url
+  webserver_pubkey = module.compute.webserver_pubkey
+
+  # bastion args
+  bastion_ip     = module.bastion.bastion_instance_ip
+  bastion_pubkey = module.bastion.bastion_pubkey
+
+  # db args
+  db_user   = var.db_user
+  db_passwd = var.db_passwd
+  db_url    = module.database.db_url
 }
 
 module "database" {
