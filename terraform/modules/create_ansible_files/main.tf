@@ -22,7 +22,7 @@ ${var.bastion_ip} ansible_ssh_private_key_file=${var.bastion_key_name}
 ${local.newline_separated_hosts} 
 
 [webservers:vars]
-ansible_ssh_common_args="-o ProxyCommand=\"ssh -q ec2-user@${var.bastion_ip} -o IdentityFile=./bastion_key -o Port=22 -W %h:%p \""
+ansible_ssh_common_args="-o StrictHostKeyChecking=no -o ProxyCommand=\"ssh -q ec2-user@${var.bastion_ip} -o IdentityFile=./bastion_key -o Port=22 -W %h:%p \""
 EOF
 }
 
