@@ -38,7 +38,7 @@
           ansible.builtin.package:
             name: ansible
 
-        - name: Copy inventory file and playbook
+        - name: Copy inventory file, variables and playbook
           ansible.builtin.copy:
             src: "{{ item.src }}"
             dest: "{{ item.dest }}"
