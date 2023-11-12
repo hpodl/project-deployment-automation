@@ -1,9 +1,9 @@
 terraform {
-  backend "s3" {
-    bucket = var.state_bucket
-    key    = var.state_path
-    region = var.state_region
-  }
+  # backend "s3" {
+  #   bucket = var.state_bucket
+  #   key    = var.state_path
+  #   region = var.state_region
+  # }
 
   required_providers {
     aws = {
